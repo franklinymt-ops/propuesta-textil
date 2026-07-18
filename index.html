@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Propuesta de Optimización Operativa · Textil</title>
+    <!-- Fuente moderna y ligera -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome (íconos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .wrapper {
+            max-width: 640px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* HEADER con gradiente sutil y textura */
+        header {
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 48px 28px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        header .tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(4px);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 16px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 span {
+            color: #60a5fa;
+        }
+
+        header p {
+            margin-top: 12px;
+            opacity: 0.8;
+            font-size: 15px;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+            max-width: 80%;
+        }
+
+        /* CONTENIDO */
+        .content {
+            padding: 32px 28px 28px;
+        }
+
+        /* alerta mejorada */
+        .alert-box {
+            background: #fef2f2;
+            border-left: 5px solid #ef4444;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            box-shadow: 0 4px 6px -2px rgba(239, 68, 68, 0.08);
+        }
+
+        .alert-box i {
+            color: #ef4444;
+            font-size: 20px;
+            margin-top: 2px;
+        }
+
+        .alert-box p {
+            font-size: 14px;
+            font-weight: 500;
+            color: #991b1b;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* títulos de sección */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 36px;
+            margin-bottom: 16px;
+        }
+
+        .section-title i {
+            color: #3b82f6;
+            font-size: 22px;
+            width: 32px;
+            text-align: center;
+        }
+
+        .section-desc {
+            font-size: 15px;
+            color: #475569;
+            margin-bottom: 20px;
+            padding-left: 8px;
+            border-left: 3px solid #e2e8f0;
+            padding-left: 16px;
+        }
+
+        /* steps en grid */
+        .steps-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .step {
+            background: #f8fafc;
+            border: 1px solid #eef2f6;
+            border-radius: 16px;
+            padding: 18px 20px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            cursor: default;
+        }
+
+        .step:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.06);
+        }
+
+        .step .step-icon {
+            background: #e2e8f0;
+            color: #1e293b;
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .step .step-content {
+            flex: 1;
+        }
+
+        .step-days {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #334155;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 100px;
+            letter-spacing: 0.3px;
+            margin-bottom: 6px;
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: #0f172a;
+            margin-bottom: 2px;
+        }
+
+        .step p {
+            font-size: 14px;
+            color: #64748b;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        /* price box mejorado */
+        .price-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 20px;
+            padding: 24px 28px;
+            text-align: center;
+            margin-top: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .price-box::before {
+            content: '💰';
+            position: absolute;
+            top: -12px;
+            right: 12px;
+            font-size: 48px;
+            opacity: 0.12;
+            transform: rotate(12deg);
+        }
+
+        .price-box strong {
+            display: block;
+            font-size: 28px;
+            font-weight: 700;
+            color: #065f46;
+            letter-spacing: -0.5px;
+        }
+
+        .price-box .sub {
+            font-size: 14px;
+            color: #14532d;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .price-box .small-note {
+            font-size: 13px;
+            color: #166534;
+            margin-top: 8px;
+            font-weight: 400;
+            opacity: 0.85;
+        }
+
+        .price-box .badge-gratis {
+            display: inline-block;
+            background: #065f46;
+            color: white;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 16px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-top: 10px;
+        }
+
+        /* botón WhatsApp premium */
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            padding: 18px 24px;
+            font-weight: 700;
+            font-size: 17px;
+            border-radius: 60px;
+            margin-top: 32px;
+            box-shadow: 0 12px 28px -8px rgba(37, 211, 102, 0.35);
+            transition: all 0.2s ease;
+            border: none;
+            letter-spacing: -0.2px;
+        }
+
+        .btn-whatsapp i {
+            font-size: 22px;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1ebe5d;
+            transform: scale(1.01);
+            box-shadow: 0 16px 36px -8px rgba(37, 211, 102, 0.45);
+        }
+
+        .btn-whatsapp:active {
+            transform: scale(0.98);
+        }
+
+        /* footer */
+        footer {
+            text-align: center;
+            padding: 24px 28px 28px;
+            font-size: 13px;
+            color: #94a3b8;
+            border-top: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        footer i {
+            color: #3b82f6;
+            font-size: 14px;
+        }
+
+        footer span {
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        /* responsive */
+        @media (max-width: 480px) {
+            .wrapper {
+                border-radius: 24px;
+            }
+
+            header {
+                padding: 32px 20px 28px;
+            }
+
+            header h1 {
+                font-size: 24px;
+            }
+
+            header p {
+                max-width: 100%;
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 24px 18px 20px;
+            }
+
+            .step {
+                padding: 14px 16px;
+                gap: 12px;
+            }
+
+            .step .step-icon {
+                width: 36px;
+                height: 36px;
+                min-width: 36px;
+                font-size: 13px;
+            }
+
+            .price-box strong {
+                font-size: 24px;
+            }
+
+            .btn-whatsapp {
+                font-size: 15px;
+                padding: 16px 20px;
+            }
+        }
+
+        /* animación de entrada sutil */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wrapper {
+            animation: fadeUp 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <header>
+        <div class="tag"><i class="fas fa-arrow-trend-up" style="margin-right: 6px;"></i> Consultoría especializada</div>
+        <h1>Plan de <span>Optimización</span> Operativa</h1>
+        <p>Logística eficiente + cierre de ventas para el sector textil</p>
+    </header>
+
+    <div class="content">
+        <!-- Alerta mejorada con ícono -->
+        <div class="alert-box">
+            <i class="fas fa-triangle-exclamation"></i>
+            <p>Un taller o marca textil pierde entre un 20% y 30% de rentabilidad por desorden en despachos y clientes que se enfrían en WhatsApp.</p>
+        </div>
+
+        <!-- Enfoque -->
+        <div class="section-title">
+            <i class="fas fa-bullseye"></i> El enfoque
+        </div>
+        <div class="section-desc">
+            Estructuro el caos operativo para que usted se concentre únicamente en producir. Atiendo sus canales de venta y coordino el transporte de punta a punta.
+        </div>
+
+        <!-- Plan de trabajo -->
+        <div class="section-title" style="margin-top: 32px;">
+            <i class="fas fa-list-check"></i> Plan piloto · 7 días
+        </div>
+
+        <div class="steps-grid">
+            <div class="step">
+                <div class="step-icon">1</div>
+                <div class="step-content">
+                    <div class="step-days"><i class="far fa-calendar-alt" style="margin-right: 4px;"></i> Día 1 – 2</div>
+                    <div class="step-title">Auditoría de envíos y chats</div>
+                    <p>Revisión a fondo del historial de mensajes para detectar ventas perdidas y análisis de tarifas actuales con transportadoras.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">2</div>
+                <div class="step-content">
+                    <div class="step-days"><i class="far fa-calendar-alt" style="margin-right: 4px;"></i> Día 3 – 4</div>
+                    <div class="step-title">Activación comercial orgánica</div>
+                    <p>Implementación de guiones de venta rápida por WhatsApp y campaña de reactivación para clientes antiguos en frío.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">3</div>
+                <div class="step-content">
+                    <div class="step-days"><i class="far fa-calendar-alt" style="margin-right: 4px;"></i> Día 5 – 6</div>
+                    <div class="step-title">Ruta logística eficiente</div>
+                    <p>Estructuración de protocolo de empaque para reducir errores (tallas/colores) y negociación directa de mejores condiciones de envío.</p>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-icon">4</div>
+                <div class="step-content">
+                    <div class="step-days"><i class="far fa-calendar-alt" style="margin-right: 4px;"></i> Día 7</div>
+                    <div class="step-title">Entrega de resultados</div>
+                    <p>Presentación del balance con el dinero ahorrado en logística y las ventas recuperadas durante la semana.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Propuesta comercial -->
+        <div class="section-title" style="margin-top: 36px;">
+            <i class="fas fa-hand-holding-dollar"></i> Propuesta comercial
+        </div>
+
+        <div class="price-box">
+            <strong>$0 COP</strong>
+            <div class="sub">Garantía de entrada</div>
+            <div class="small-note">Los primeros 7 días de implementación operativa son completamente gratis. Si no ve resultados, no me paga nada.</div>
+            <div class="badge-gratis"><i class="fas fa-check-circle" style="margin-right: 6px;"></i> Sin riesgo</div>
+        </div>
+
+        <!-- Botón WhatsApp con ícono y mensaje personalizado -->
+        <!-- ⚠️ REEMPLAZA EL NÚMERO DE TELÉFONO (incluye código de país, ej. 57 para Colombia) -->
+        <a href="https://wa.me/573000000000?text=Hola%20Franklin,%20vi%20tu%20propuesta%20y%20quiero%20agendar%20los%207%20días%20de%20prueba" class="btn-whatsapp" target="_blank">
+            <i class="fab fa-whatsapp"></i> Agendar prueba de 7 días gratis
+        </a>
+    </div>
+
+    <footer>
+        <i class="fas fa-circle-check"></i>
+        <span>Franklin</span> · Consultoría en Operaciones Textil &amp; E-commerce
+    </footer>
+</div>
+
+</body>
+</html>
